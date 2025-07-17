@@ -2,14 +2,13 @@
 autoinstall:
   version: 1
   identity:
-    realname: "Pedro Henrique Ribeiro"
+    realname: 'Pedro Henrique Ribeiro'
     hostname: ubuntu-desktop
     username: pedro
-    password: "$y$j9T$uhkxlm8nUQaNu.6rl4k2d.$DIldpYy96OHg8lFjfXfc671BZcGWkPOmaDONGAhGSg3"
+    password: '$y$j9T$uhkxlm8nUQaNu.6rl4k2d.$DIldpYy96OHg8lFjfXfc671BZcGWkPOmaDONGAhGSg3'
   locale: pt_BR.utf8
   keyboard:
     layout: br
-    variant: abnt2
   timezone: "America/Sao_Paulo"
   packages:
     - git
@@ -19,7 +18,6 @@ autoinstall:
     - lm-sensors
     - psensor
     - nvidia-driver-550
-    - snapd
   snaps:
     - name: spotify
       channel: stable
@@ -39,22 +37,3 @@ autoinstall:
     install: true
   updates: all
   shutdown: reboot
-  late-commands:
-    - |
-      # Enable snapd service
-      curtin in-target -- systemctl enable snapd
-      curtin in-target -- systemctl start snapd
-      # Install nvm (Node Version Manager) and Node.js LTS
-      curtin in-target -- bash -c 'curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.1/install.sh | bash'
-      curtin in-target -- bash -c 'source /home/user/.nvm/nvm.sh && nvm install --lts && npm install -g npm'
-      # Install Google Chrome
-      curtin in-target -- bash -c 'wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb -O /tmp/chrome.deb'
-      curtin in-target -- bash -c 'apt-get install -y /tmp/chrome.deb && rm /tmp/chrome.deb'
-      # Install Cursor (AppImage)
-      curtin in-target -- bash -c 'wget https://downloader.cursor.sh/linux-appimage-x64 -O /tmp/cursor.AppImage'
-      curtin in-target -- bash -c 'chmod +x /tmp/cursor.AppImage && mv /tmp/cursor.AppImage /home/user/cursor.AppImage'
-      # Install Docker
-      curtin in-target -- bash -c 'curl -fsSL https://get.docker.com | sh'
-      curtin in-target -- bash -c 'usermod -aG docker user'
-      # Set up lm-sensors for hardware monitoring
-      curtin in-target -- bash -c 'sensors-detect --auto'
